@@ -33,14 +33,17 @@ public class UIManager : MonoBehaviour
         // 정렬된 유닛들을 UI에 표시
         foreach (Unit unit in sortedUnits)
         {
-            // 유닛 UI 아이템 생성
+            // 유닛 UI 아이템 생성 (프리팹 인스턴스화)
             GameObject unitUIItem = Instantiate(unitUIItemPrefab, unitUIContainer);
 
-            // 유닛 이름 텍스트 표시
-            unitUIItem.GetComponentInChildren<Text>().text = unit.unitName;
+            // UIIcon 컴포넌트 참조
+            UIIcon uiIcon = unitUIItem.GetComponent<UIIcon>();
 
-            // 유닛 이미지 표시 (유닛에 설정된 이미지)
-            unitUIItem.GetComponentInChildren<Image>().sprite = unit.unitImage;
+            // 유닛 데이터를 UIIcon에 전달
+            uiIcon.unit = unit; // 유닛 데이터 연결
+
+            // UIIcon에서 유닛 정보 반영 (색상, 이미지, 이름 등)
+            uiIcon.UpdateUI();
         }
     }
 }
