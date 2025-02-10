@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class UIIcon : MonoBehaviour
 
     public Image background;  // 배경 이미지
     public Image icon;        // 유닛 이미지 (아이콘)
-    public Text unitNameText; // 유닛 이름 텍스트
+    public TextMeshProUGUI unitNameText; // 유닛 이름 텍스트
 
     // 유닛 데이터에 맞춰 UI 아이콘을 업데이트
     public void UpdateUI()

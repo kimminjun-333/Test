@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum UnitState
 {
-    Idle,      // 대기
     Moving,    // 이동
     Attacking, // 공격
     Holding    // 홀드
@@ -21,28 +20,33 @@ public enum UnitTier
 
 public class Unit : MonoBehaviour
 {
-    public string unitName;    // 유닛 이름
-    public UnitTier tier;      // 유닛 티어
-    public GameObject unitPrefab;  // 유닛 이미지를 위한 프리팹
-    public Sprite unitImage; //유닛 이미지
+    public string unitName;        //유닛 이름
+    public UnitTier tier;          //유닛 티어
+    public Sprite unitImage;       //유닛 이미지
+    public Color basicColor;
 
-    public float attackRange = 5f; // 공격 범위
-    public float moveSpeed = 3f;
-    public UnitState currentState = UnitState.Idle;
-    public Monster target;
-    public Vector3 targetPos;
+    public float attackDamage = 10f; //공격력
+    public float attackRange = 5f;   //공격 범위
+    public float moveSpeed = 3f;     //이동 속도
 
-    public bool canAttack = false; // 공격 가능한 유닛인지 여부
+    public UnitState currentState = UnitState.Holding;
+    public Monster targetMonster;
+
+    public bool isCanAttack = false; //공격 가능한 유닛인지 여부
     public bool isAtk = false;
     public bool ishold = false;
-    public bool isMove = false;
-    private bool isOnAtk = false;
+    private bool isContactMonster = false;
 
     private Collider col;
+    public UnitMove unitMove;
+    public IAtk atk;
 
     private void Awake()
     {
         col = GetComponent<Collider>();
+        unitMove = GetComponent<UnitMove>();
+        atk = GetComponent<IAtk>();
+        basicColor = GetComponent<Renderer>().material.color;
     }
 
     private void Update()
@@ -50,7 +54,7 @@ public class Unit : MonoBehaviour
         switch (currentState)
         {
             case UnitState.Moving:
-                MoveToTarget();
+                MoveToTargetPos();
                 break;
 
             case UnitState.Attacking:
@@ -66,74 +70,67 @@ public class Unit : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 공격 가능한 유닛이 사거리 내 적을 감지하면 공격 상태로 변경
-        if (other.CompareTag("Monster") && canAttack)
+        if (other.CompareTag("Monster") && isCanAttack)
         {
-            isOnAtk = true;  //사거리내에적있음
-            SetClosestEnemyAsTarget();
+            isContactMonster = true;  //사거리내에적있음
+            SetClosestMonsterAsTarget();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         // 적이 사거리에서 벗어나면 공격을 멈춤
-        if (other.CompareTag("Monster") && canAttack)
+        if (other.CompareTag("Monster") && isCanAttack)
         {
-            isOnAtk = false;  //사거리내에적없음
-            target = null;
+            isContactMonster = false;  //사거리내에적없음
+            targetMonster = null;
         }
     }
 
-    public void SetClosestEnemyAsTarget()
+    public void SetClosestMonsterAsTarget()
     {
         if (UnitManager.instance.monsters.Count == 0) return;  // 몬스터가 없다면 종료
 
-        Monster closestEnemy = null;
+        Monster closestMonster = null;
         float closestDistance = Mathf.Infinity;  // 가장 가까운 적의 거리
 
         // 유닛이 소속된 몬스터 리스트에서 가장 가까운 적을 찾는다.
-        foreach (Monster enemy in UnitManager.instance.monsters)
+        foreach (Monster monsters in UnitManager.instance.monsters)
         {
             // 적의 위치와 유닛의 위치 사이의 거리 계산
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            float distanceToMonster = Vector3.Distance(transform.position, monsters.transform.position);
 
-            if (distanceToEnemy < closestDistance)
+            if (distanceToMonster < closestDistance)
             {
-                closestDistance = distanceToEnemy;
-                closestEnemy = enemy;
+                closestDistance = distanceToMonster;
+                closestMonster = monsters;
             }
         }
 
         // 가장 가까운 적을 타겟으로 설정
-        if (closestEnemy != null)
+        if (closestMonster != null)
         {
-            target = closestEnemy;
+            targetMonster = closestMonster;
         }
     }
 
-    public void SetTarget(Vector3 newTarget)
+    public void MoveToTargetPos()
     {
-        targetPos = newTarget;
-    }
-
-    public void MoveToTarget()
-    {
-        // 이동할 방향 계산
-        Vector3 direction = targetPos - transform.position;
-        transform.position += direction.normalized * moveSpeed * Time.deltaTime;
-        if (isAtk == true && isOnAtk == true && isMove == false)
+        if (isCanAttack && isContactMonster)
         {
             currentState = UnitState.Attacking;
         }
-        else if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
+        else
         {
-            currentState = UnitState.Holding;
+            unitMove.Move();
         }
     }
 
-    public void AttackTarget()
+    public IEnumerator AttackTarget()
     {
-        if (target == null) return;
-
+        if (targetMonster == null) yield break;
+        isAtk = true;
+        yield return new WaitForSeconds(0.5f);
         // 공격 범위 내에 적이 있는지 확인
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
 
@@ -142,7 +139,7 @@ public class Unit : MonoBehaviour
         // OverlapSphere로 얻은 모든 콜라이더들 중에서 타겟이 있는지 확인
         foreach (Collider hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Enemy") && hitCollider.transform == target)
+            if (hitCollider.CompareTag("Monster") && hitCollider.transform == targetMonster)
             {
                 targetInRange = true;
                 break; // 타겟이 공격 범위 내에 있으면 반복문 종료
@@ -152,25 +149,24 @@ public class Unit : MonoBehaviour
         // 공격 범위 내에 적이 있으면 공격 실행
         if (targetInRange)
         {
-            Debug.Log($"{unitName} is attacking {target.name}");
-
-            // 공격 애니메이션 또는 공격 처리 로직을 여기에 추가
-            // 예를 들어, 체력 감소 등의 추가 작업
+            Debug.Log($"{unitName} is attacking {targetMonster.name}");
+            atk.Atk();
 
         }
         else
         {
             // 공격 범위 내에 적이 없으면 공격 실패
-            Debug.Log($"{unitName} failed to attack {target.name} - out of range");
+            Debug.Log($"{unitName} failed to attack {targetMonster.name} - out of range");
         }
+        yield return new WaitForSeconds(1f);
+        isAtk = false;
     }
 
 
     // 홀딩 상태에서 유닛이 이동하지 않고, 적이 있으면 공격만 함
     private void HoldPosition()
     {
-        if (!isMove) isMove = false;
-        if (isOnAtk)
+        if (isContactMonster)
         {
             AttackTarget();  // 공격 시작
         }
@@ -185,6 +181,6 @@ public class Unit : MonoBehaviour
     public void Deselect()
     {
         // 유닛 선택 해제시 색상 변화 등 비주얼 처리를 할 수 있음
-        GetComponent<Renderer>().material.color = Color.white;
+        GetComponent<Renderer>().material.color = basicColor;
     }
 }
