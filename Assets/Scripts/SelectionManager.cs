@@ -241,7 +241,10 @@ public class SelectionManager : MonoBehaviour
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+
+        int layerMask = LayerMask.GetMask("Unit");
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             Unit clickedUnit = hit.collider.GetComponent<Unit>();
             if (clickedUnit != null)
@@ -269,7 +272,10 @@ public class SelectionManager : MonoBehaviour
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+
+        int layerMask = LayerMask.GetMask("Unit");
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             Unit clickedUnit = hit.collider.GetComponent<Unit>();
             if (clickedUnit != null)

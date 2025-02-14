@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, ITakeDamage
 {
-    // Start is called before the first frame update
-    void Start()
+    public float moveSpeed;
+    public float curHp;
+    private float maxHp;
+
+    private void Awake()
     {
-        
+        maxHp = curHp;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        UnitManager.instance.monsters.Add(this);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        curHp -= Mathf.FloorToInt(damage);
     }
 }

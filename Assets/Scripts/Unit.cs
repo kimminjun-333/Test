@@ -23,7 +23,6 @@ public class Unit : MonoBehaviour
     public string unitName;        //유닛 이름
     public UnitTier tier;          //유닛 티어
     public Sprite unitImage;       //유닛 이미지
-    public Color basicColor;
 
     public float attackDamage = 10f; //공격력
     public float attackRange = 5f;   //공격 범위
@@ -35,18 +34,21 @@ public class Unit : MonoBehaviour
     public bool isCanAttack = false; //공격 가능한 유닛인지 여부
     public bool isAtk = false;
     public bool ishold = false;
-    private bool isContactMonster = false;
+    public bool isContactMonster = false;
 
-    private Collider col;
     public UnitMove unitMove;
-    public IAtk atk;
+
+    private Color basicColor;
+    private Collider col;
+
+    private List<ISkill> skills = new List<ISkill>();
 
     private void Awake()
     {
         col = GetComponent<Collider>();
         unitMove = GetComponent<UnitMove>();
-        atk = GetComponent<IAtk>();
         basicColor = GetComponent<Renderer>().material.color;
+        skills.AddRange(GetComponents<ISkill>());
     }
 
     private void Update()
@@ -58,32 +60,15 @@ public class Unit : MonoBehaviour
                 break;
 
             case UnitState.Attacking:
-                AttackTarget();
+                if (isAtk == false)
+                {
+                    StartCoroutine(AttackTarget());
+                }
                 break;
 
             case UnitState.Holding:
                 HoldPosition();
                 break;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // 공격 가능한 유닛이 사거리 내 적을 감지하면 공격 상태로 변경
-        if (other.CompareTag("Monster") && isCanAttack)
-        {
-            isContactMonster = true;  //사거리내에적있음
-            SetClosestMonsterAsTarget();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // 적이 사거리에서 벗어나면 공격을 멈춤
-        if (other.CompareTag("Monster") && isCanAttack)
-        {
-            isContactMonster = false;  //사거리내에적없음
-            targetMonster = null;
         }
     }
 
@@ -106,7 +91,6 @@ public class Unit : MonoBehaviour
                 closestMonster = monsters;
             }
         }
-
         // 가장 가까운 적을 타겟으로 설정
         if (closestMonster != null)
         {
@@ -126,9 +110,41 @@ public class Unit : MonoBehaviour
         }
     }
 
+    // 스킬을 확률에 따라 발동하는 메서드
+    public void TryActivateSkill()
+    {
+        foreach (var skill in skills)
+        {
+            if (Random.value <= skill.GetActivationChance())
+            {
+                // 스킬 발동 시 타겟이 없을 수도 있기 때문에, 조건에 맞게 처리
+                if (targetMonster != null)
+                {
+                    skill.ExecuteSkill(this, targetMonster);  // 타겟이 있을 경우
+                }
+                else
+                {
+                    skill.ExecuteSkill(this);  // 타겟이 없을 경우
+                }
+            }
+        }
+    }
+
+    public void Atk()
+    {
+        targetMonster.TakeDamage(attackDamage);
+        TryActivateSkill();
+    }
+
     public IEnumerator AttackTarget()
     {
+        SetClosestMonsterAsTarget();
+
         if (targetMonster == null) yield break;
+
+        LookAtTarget();
+
+        print($"공격시작 타겟 : {targetMonster}");
         isAtk = true;
         yield return new WaitForSeconds(0.5f);
         // 공격 범위 내에 적이 있는지 확인
@@ -139,7 +155,8 @@ public class Unit : MonoBehaviour
         // OverlapSphere로 얻은 모든 콜라이더들 중에서 타겟이 있는지 확인
         foreach (Collider hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Monster") && hitCollider.transform == targetMonster)
+            print($"{hitCollider.name}");
+            if (hitCollider.CompareTag("Monster") && hitCollider.gameObject == targetMonster.gameObject)
             {
                 targetInRange = true;
                 break; // 타겟이 공격 범위 내에 있으면 반복문 종료
@@ -150,8 +167,7 @@ public class Unit : MonoBehaviour
         if (targetInRange)
         {
             Debug.Log($"{unitName} is attacking {targetMonster.name}");
-            atk.Atk();
-
+            Atk();
         }
         else
         {
@@ -171,6 +187,18 @@ public class Unit : MonoBehaviour
             AttackTarget();  // 공격 시작
         }
     }
+
+    private void LookAtTarget()
+    {
+        if (targetMonster == null) return;
+
+        // 타겟의 y 값을 유지하고, 타겟의 x, z 좌표로만 회전하도록 계산
+        Vector3 targetPosition = new Vector3(targetMonster.transform.position.x, transform.position.y, targetMonster.transform.position.z);
+
+        // 현재 위치에서 타겟을 바라보도록 회전
+        transform.LookAt(targetPosition);
+    }
+
 
     public void Select()
     {
