@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3664499494425983986}
   - component: {fileID: 4555594942830977495}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: EpicUnitSkillAObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,6 +6,7 @@ public class EpicUnitSkillA : MonoBehaviour, ISkill
 {
     public float skillRange = 5f;//공격범위(원형)
     public float skillDamage = 2f;//스킬데미지(공격데미지에 곱할값)
+    public float stunTime = 3f;
 
     public GameObject atkobj;
 
@@ -25,6 +26,7 @@ public class EpicUnitSkillA : MonoBehaviour, ISkill
             {
                 print($"Hit : {collider.gameObject.name}");
                 collider.GetComponent<ITakeDamage>().TakeDamage(unit.attackDamage * skillDamage);
+                collider.GetComponent<Monster>().ApplyStun(stunTime);
             }
         }
     }

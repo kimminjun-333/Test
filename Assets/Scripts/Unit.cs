@@ -146,7 +146,7 @@ public class Unit : MonoBehaviour
 
         print($"공격시작 타겟 : {targetMonster}");
         isAtk = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         // 공격 범위 내에 적이 있는지 확인
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
 

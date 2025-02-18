@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class EpicUnitSkillB : MonoBehaviour, ISkill
 {
-    public float skillDamage = 10f;//스킬데미지(공격데미지에 곱할값)
+    public float skillRange = 5f;//공격범위(원형)
+    public float skillDamage = 1.5f;//스킬데미지(공격데미지에 곱할값)
+    public float stunTime = 3f;
+
+    public float speedReductionAmount = 0.2f;//이동속도감소비율
+    public float speedReductionDuration = 3f;//이동속도감소시간
 
     public float skillChance = 0.5f;
     public bool onTarget = true;
@@ -12,7 +17,16 @@ public class EpicUnitSkillB : MonoBehaviour, ISkill
     public void ExecuteSkill(Unit unit, Monster target = null)
     {
         print("EpicUnitSkillB 실행");
-        target.TakeDamage(unit.attackDamage * skillDamage); // 예: 공격력 2배 피해
+        Collider[] hitColliders = Physics.OverlapSphere(target.transform.position, skillRange);
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Monster"))
+            {
+                print($"Hit : {collider.gameObject.name}");
+                collider.GetComponent<ITakeDamage>().TakeDamage(unit.attackDamage * skillDamage);
+                collider.GetComponent<Monster>().ApplySpeedReduction(speedReductionAmount, speedReductionDuration);
+            }
+        }
     }
 
     public bool RequiresTarget()
