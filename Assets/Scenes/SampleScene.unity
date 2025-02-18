@@ -145,7 +145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1091686
 Transform:
   m_ObjectHideFlags: 0
@@ -200,7 +200,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1091689
@@ -217,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -541,7 +545,7 @@ Transform:
   m_GameObject: {fileID: 82423175}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.03, y: 1.5, z: -8.96}
+  m_LocalPosition: {x: -27.1, y: 1.5, z: 15.4}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -561,8 +565,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillDamage: 10
-  skillChance: 0.1
+  skillRange: 5
+  skillDamage: 1.5
+  speedReductionAmount: 0.3
+  speedReductionDuration: 3
+  skillChance: 0.8
   onTarget: 1
 --- !u!114 &82423184
 MonoBehaviour:
@@ -577,10 +584,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillRange: 5
-  skillDamage: 3
+  skillDamage: 2
+  stunTime: 1
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
-  skillChance: 0.3
-  onTarget: 0
+  skillChance: 0.2
+  onTarget: 1
 --- !u!1 &88130117
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &222373258
 Transform:
   m_ObjectHideFlags: 0
@@ -899,7 +907,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &222373261
@@ -916,6 +927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -1302,7 +1314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &318966145
 Transform:
   m_ObjectHideFlags: 0
@@ -1357,7 +1369,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &318966148
@@ -1374,6 +1389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -1580,7 +1596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &398641547
 Transform:
   m_ObjectHideFlags: 0
@@ -1635,7 +1651,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &398641550
@@ -1652,6 +1671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -1979,7 +1999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &443953272
 Transform:
   m_ObjectHideFlags: 0
@@ -2034,7 +2054,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &443953275
@@ -2051,6 +2074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -2569,7 +2593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &511108781
 Transform:
   m_ObjectHideFlags: 0
@@ -2624,7 +2648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &511108784
@@ -2641,6 +2668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -2847,7 +2875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &552913213
 Transform:
   m_ObjectHideFlags: 0
@@ -2902,7 +2930,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &552913216
@@ -2919,6 +2950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -3058,7 +3090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &557131676
 Transform:
   m_ObjectHideFlags: 0
@@ -3113,7 +3145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &557131679
@@ -3130,6 +3165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -4546,7 +4582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &762130526
 Transform:
   m_ObjectHideFlags: 0
@@ -4601,7 +4637,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &762130529
@@ -4618,6 +4657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -5249,7 +5289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &862434335
 Transform:
   m_ObjectHideFlags: 0
@@ -5304,7 +5344,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &862434338
@@ -5321,6 +5364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -5834,7 +5878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1001353088
 Transform:
   m_ObjectHideFlags: 0
@@ -5889,7 +5933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1001353091
@@ -5906,6 +5953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -6217,7 +6265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1059311644
 Transform:
   m_ObjectHideFlags: 0
@@ -6272,7 +6320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1059311647
@@ -6289,6 +6340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -6662,7 +6714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1143219893
 Transform:
   m_ObjectHideFlags: 0
@@ -6717,7 +6769,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1143219896
@@ -6734,6 +6789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -6873,7 +6929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1210179416
 Transform:
   m_ObjectHideFlags: 0
@@ -6928,7 +6984,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1210179419
@@ -6945,6 +7004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -7533,7 +7593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1364694166
 Transform:
   m_ObjectHideFlags: 0
@@ -7588,7 +7648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1364694169
@@ -7605,6 +7668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -7744,7 +7808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1445799835
 Transform:
   m_ObjectHideFlags: 0
@@ -7799,7 +7863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1445799838
@@ -7816,6 +7883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -8690,7 +8758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1647501673
 Transform:
   m_ObjectHideFlags: 0
@@ -8745,7 +8813,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1647501676
@@ -8762,6 +8833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -8901,7 +8973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1667027600
 Transform:
   m_ObjectHideFlags: 0
@@ -8956,7 +9028,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &1667027603
@@ -8973,6 +9048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0
@@ -9590,7 +9666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2142819798
 Transform:
   m_ObjectHideFlags: 0
@@ -9645,7 +9721,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acac461cc7199440ab2bde3f9e7d952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillRange: 5
   skillDamage: 10
+  speedReductionAmount: 0.2
+  speedReductionDuration: 3
   skillChance: 0.1
   onTarget: 1
 --- !u!114 &2142819801
@@ -9662,6 +9741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRange: 5
   skillDamage: 3
+  stunTime: 3
   atkobj: {fileID: 42541525737070758, guid: c24fe10d00d25ec4ab1950a4e0c03006, type: 3}
   skillChance: 0.3
   onTarget: 0

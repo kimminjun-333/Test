@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestSpwan : MonoBehaviour
+public class MonsterSpwaner : MonoBehaviour
 {
     public GameObject monsterPrefab;
-    private Button button;
 
     // 필드로 이동할 포인트들을 설정
     private Vector3[] waypoints = new Vector3[]
@@ -17,13 +16,35 @@ public class TestSpwan : MonoBehaviour
         new Vector3(20, 0, 20)    //3
     };
 
-    private void Awake()
+    private void Start()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(() => TestMonsterSpwan());
+        StartCoroutine(WaveStart());
     }
 
-    public void TestMonsterSpwan()
+    public IEnumerator WaveStart()
+    {
+        int wave = 1;
+        int maxWave = 60;
+        int maxWaveMonsterCount = 40;
+        float waveTime = 60f;
+        float curWaveTime = 0f;
+        while (wave < maxWave)
+        {
+            print($"현재 Wave : {wave} 시작");
+            for (int i = 0; i < maxWaveMonsterCount; ++i)
+            {
+                MonsterSpwan();
+                yield return new WaitForSeconds(1f);
+                curWaveTime++;
+            }
+            yield return new WaitForSeconds(waveTime - curWaveTime);
+            print($"현재 Wave : {wave} 종료");
+            wave++;
+        }
+        print($"현재 Wave : {wave} 마지막 Wave 종료");
+    }
+
+    public void MonsterSpwan()
     {
         // 몬스터의 Y 위치를 소환 위치로 지정
         float yPos = monsterPrefab.transform.localScale.y / 2;

@@ -146,34 +146,11 @@ public class Unit : MonoBehaviour
 
         print($"공격시작 타겟 : {targetMonster}");
         isAtk = true;
-        yield return new WaitForSeconds(0.1f);
-        // 공격 범위 내에 적이 있는지 확인
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+        yield return new WaitForSeconds(0.2f);
 
-        bool targetInRange = false;
+        Debug.Log($"{unitName} is attacking {targetMonster.name}");
+        Atk();
 
-        // OverlapSphere로 얻은 모든 콜라이더들 중에서 타겟이 있는지 확인
-        foreach (Collider hitCollider in hitColliders)
-        {
-            print($"{hitCollider.name}");
-            if (hitCollider.CompareTag("Monster") && hitCollider.gameObject == targetMonster.gameObject)
-            {
-                targetInRange = true;
-                break; // 타겟이 공격 범위 내에 있으면 반복문 종료
-            }
-        }
-
-        // 공격 범위 내에 적이 있으면 공격 실행
-        if (targetInRange)
-        {
-            Debug.Log($"{unitName} is attacking {targetMonster.name}");
-            Atk();
-        }
-        else
-        {
-            // 공격 범위 내에 적이 없으면 공격 실패
-            Debug.Log($"{unitName} failed to attack {targetMonster.name} - out of range");
-        }
         yield return new WaitForSeconds(1f);
         isAtk = false;
     }

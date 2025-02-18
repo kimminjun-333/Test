@@ -62,11 +62,11 @@ public class Monster : MonoBehaviour, ITakeDamage
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0; // y축 회전 방지
 
-        // 목표 방향을 향해 부드럽게 회전
+        // 목표 방향을 향해 부드럽게 회전 (회전 속도 증가)
         if (direction.magnitude > 0.1f)  // 충분히 가까워지지 않았을 때만 회전
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);  // 부드럽게 회전
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);  // 회전 속도 10f로 더 빠르게 회전
         }
 
         // 목표 지점에 도달했는지 확인
@@ -101,11 +101,12 @@ public class Monster : MonoBehaviour, ITakeDamage
             // 이동 속도 감소 효과가 끝났다면 제거
             if (reduction.duration <= 0f)
             {
-                speedReductions.RemoveAt(i);
+                speedReductions.RemoveAt(i);  // 효과 제거
             }
             else
             {
                 reduction.duration -= Time.deltaTime;  // 감소 효과 시간 차감
+                speedReductions[i] = reduction;  // 리스트에 갱신된 값을 다시 설정
             }
         }
 
@@ -114,6 +115,47 @@ public class Monster : MonoBehaviour, ITakeDamage
         foreach (var reduction in speedReductions)
         {
             finalMoveSpeed *= (1f - reduction.amount);  // 이동 속도 감소율 적용
+        }
+    }
+
+    // 이동 속도 감소를 적용하는 메소드
+    public void ApplySpeedReduction(float amount, float duration, int skillId)
+    {
+        bool foundExistingEffect = false;
+
+        // 이미 동일한 스킬이 적용된 경우, 지속 시간만 갱신
+        for (int i = 0; i < speedReductions.Count; i++)
+        {
+            SpeedReduction reduction = speedReductions[i];
+
+            // 동일한 스킬Id를 가진 효과가 있으면 갱신
+            if (reduction.skillId == skillId)
+            {
+                reduction.duration = Mathf.Max(reduction.duration, duration);  // 시간이 더 길면 갱신
+                foundExistingEffect = true;
+                break;
+            }
+        }
+
+        // 동일한 스킬이 없으면 새로운 효과로 추가
+        if (!foundExistingEffect)
+        {
+            speedReductions.Add(new SpeedReduction(amount, duration, skillId));
+        }
+    }
+
+    // 이동 속도 감소 효과를 나타내는 구조체
+    private struct SpeedReduction
+    {
+        public float amount;  // 이동 속도 감소 비율 (예: 0.1f == 10% 감소)
+        public float duration;  // 이동 속도 감소 지속 시간
+        public int skillId;  // 고유 스킬 ID (이동 속도 감소를 발생시킨 스킬을 구분하기 위한 ID)
+
+        public SpeedReduction(float amount, float duration, int skillId)
+        {
+            this.amount = amount;
+            this.duration = duration;
+            this.skillId = skillId;
         }
     }
 
@@ -148,25 +190,6 @@ public class Monster : MonoBehaviour, ITakeDamage
             // 처음 스턴을 받는 경우
             curState = MonsterState.Stunned;
             stunDuration = duration;
-        }
-    }
-
-    // 이동 속도 감소를 적용하는 메소드
-    public void ApplySpeedReduction(float amount, float duration)
-    {
-        speedReductions.Add(new SpeedReduction(amount, duration));
-    }
-
-    // 이동 속도 감소 효과를 나타내는 구조체
-    private struct SpeedReduction
-    {
-        public float amount;  // 이동 속도 감소 비율 (예: 0.1f == 10% 감소)
-        public float duration;  // 이동 속도 감소 지속 시간
-
-        public SpeedReduction(float amount, float duration)
-        {
-            this.amount = amount;
-            this.duration = duration;
         }
     }
 }

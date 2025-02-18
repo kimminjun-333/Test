@@ -6,11 +6,11 @@ public class EpicUnitSkillA : MonoBehaviour, ISkill
 {
     public float skillRange = 5f;//공격범위(원형)
     public float skillDamage = 2f;//스킬데미지(공격데미지에 곱할값)
-    public float stunTime = 3f;
+    public float stunTime = 1f;
 
     public GameObject atkobj;
 
-    public float skillChance = 0.3f;
+    public float skillChance = 0.2f;
     public bool onTarget = true;
 
     public void ExecuteSkill(Unit unit, Monster target = null)

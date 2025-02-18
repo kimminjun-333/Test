@@ -23,7 +23,7 @@ public class UnitAtkRange : MonoBehaviour
         // 적이 사거리에서 벗어나면 공격을 멈춤
         if (other.CompareTag("Monster"))
         {
-            unit.targetMonster = null;
+            //unit.targetMonster = null;
             unit.isContactMonster = false;  //사거리내에적없음
         }
     }
